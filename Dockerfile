@@ -1,9 +1,8 @@
 FROM swr.cn-east-3.myhuaweicloud.com/op_svc_cse/python-x86_64:3-int-1.0
-RUN wget -c https://github.com/Kitware/CMake/releases/download/v3.17.0-rc3/cmake-3.17.0-rc3.tar.gz
-RUN tar zxvf cmake-3.17.0-rc3.tar.gz
-RUN cd cmake-3.17.0-rc3./bootstrap
-RUN gmake
-RUN gmake install
-WORKDIR /home/app
-COPY . .
+WORKDIR /var/trade-algo-shandong-dayahead-price-forecast
+COPY ./ /var/trade-algo-shandong-dayahead-price-forecast/
+RUN wget -c https://cmake.org/files/LatestRelease/cmake-3.27.0-rc1-linux-aarch64.tar.gz
+RUN tar -zxvf cmake-3.27.0-rc1-linux-aarch64.tar.gz && cd cmake-3.27.0-rc1-Linux-x86_64/bin && ln -s /var/trade-algo-shandong-dayahead-price-forecast/cmake-3.27.0-rc1-Linux-x86_64/bin/cmake /usr/bin/cmake
+RUN pipreqs --debug ./
+RUN pip3 install -i https://mirrors.huaweicloud.com/repository/pypi/simple xgboost==1.4.2
 CMD [ "python", "./app.py" ]
